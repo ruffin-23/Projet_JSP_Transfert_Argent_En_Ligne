@@ -8,10 +8,19 @@
 	<title>Transfert d'argent en ligne</title>
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.css">
+	
+	<script>
+        function calculateMontant2() {
+            var montant1 = document.getElementById("montant1").value;
+            var montant2 = montant1 * 4800;
+            document.getElementById("montant2").value = montant2.toFixed(0); // Pour arrondir à 2 décimales si nécessaire
+        }
+    </script>
+	
 </head>
 <body>
 
-	<jsp:include page="../index.jsp" />
+	<jsp:include page="../../index.jsp" />
 	<br>
 	<div class="container col-md-5">
 		<div class="card">
@@ -49,20 +58,23 @@
 				<fieldset class="form-group">
 					<label>Montant1</label> 
 					<input type="number" 
+						id="montant1" 
 						value="<c:out value='${taux.montant1}' />" 
 						class="form-control"
 						name="montant1" 
 						required="required"
+						oninput="calculateMontant2();" 
 					/>
 				</fieldset>
 
 				<fieldset class="form-group">
 					<label>Montant2</label> 
 					<input type="number"
+						id="montant2"
 						value="<c:out value='${taux.montant2}' />" 
 						class="form-control"
 						name="montant2"
-						
+						readonly
 					/>
 				</fieldset>
 				<br>

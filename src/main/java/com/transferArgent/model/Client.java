@@ -6,11 +6,11 @@ public class Client {
 	private String nom;
 	private String sexe;
 	private String pays;
-	private int solde;
+	private float solde;
 	private String mail;
 	
 	// Constructeur par défaut
-	public Client(String nom, String sexe, String pays, int solde, String mail) {
+	public Client(String nom, String sexe, String pays, float solde, String mail) {
 		super();
 		this.nom = nom;
 		this.sexe = sexe;
@@ -20,7 +20,7 @@ public class Client {
 	}
 
 	// Constructeur avec paramètres
-	public Client(String numtel, String nom, String sexe, String pays, int solde, String mail) {
+	public Client(String numtel, String nom, String sexe, String pays, float solde, String mail) {
 		super();
 		this.numtel = numtel;
 		this.nom = nom;
@@ -31,9 +31,13 @@ public class Client {
 	}
 
 
-	public String getNumtel() {
-		return numtel;
-	}
+	public Client(String numtel) {
+        this.numtel = numtel;
+    }
+
+    public String getNumtel() {
+        return numtel;
+    }
 
 	public void setNumtel(String numtel) {
 		this.numtel = numtel;
@@ -63,11 +67,11 @@ public class Client {
 		this.pays = pays;
 	}
 
-	public int getSolde() {
+	public float getSolde() {
 		return solde;
 	}
 
-	public void setSolde(int solde) {
+	public void setSolde(float solde) {
 		this.solde = solde;
 	}
 

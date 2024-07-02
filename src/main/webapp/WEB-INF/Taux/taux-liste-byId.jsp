@@ -17,7 +17,7 @@
 </head>
 <body>
 	
-	<jsp:include page="../index.jsp" />
+	<jsp:include page="../../index.jsp" />
 	<br>
 
     <div class="container">
@@ -26,7 +26,7 @@
                 Détails du Taux
             </div>
             <div class="card-body">
-                <h5 class="card-title">Informations Client</h5>
+                <h5 class="card-title">Informations Taux</h5>
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>Identifient taux :</strong> ${taux.idtaux}</p>
@@ -36,7 +36,7 @@
                 </div>
                 <a href="editT?idtaux=${taux.idtaux}" class="btn btn-primary">Modifier</a>
                 <a href="deleteT?idtaux=${taux.idtaux}" class="btn btn-danger">Supprimer</a>
-                <a href="<%= request.getContextPath() %>/taux-liste" class="btn btn-secondary">Retour à la liste des clients</a>
+                <a href="<%= request.getContextPath() %>/taux/listeT" class="btn btn-secondary">Retour à la liste des taux</a>
             </div>
         </div>
     </div>

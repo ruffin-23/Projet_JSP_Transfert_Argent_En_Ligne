@@ -18,12 +18,14 @@ public class ClientDAO {
 	private static final String SELECT_ALL_CLIENTS = "SELECT * FROM client";
 	private static final String DELETE_CLIENT_SQL = "DELETE from client WHERE numtel = ?";
 	private static final String UPDATE_CLIENT_SQL = "UPDATE client SET nom=?, sexe=?, pays=?, solde=?, mail=? WHERE numtel = ?";
-	private static final String SEARCH_CLIENT_SQL = "SELECT * FROM CLIENT WHERE numtel LIKE ? OR nom LIKE ? OR pays LIKE ?";
+	private static final String SEARCH_CLIENT_SQL = "Select * from client where numtel LIKE ? OR nom LIKE ? OR sexe LIKE ? OR pays LIKE ?";
+	private static final String UPDATE_SOLDE_CLIENT_SQL = "UPDATE client SET solde=? WHERE numtel = ?";
 	
 	public ClientDAO () {
 		
 	}
 	
+
 	public void insertClient (Client client) throws SQLException {
 		//System.out.println(INSERT_CLIENT_SQL);
 		
@@ -35,7 +37,7 @@ public class ClientDAO {
 			stmt.setString(2, client.getNom());
 			stmt.setString(3, client.getSexe());
 			stmt.setString(4, client.getPays());
-			stmt.setInt(5, client.getSolde());
+			stmt.setFloat(5, client.getSolde());
 			stmt.setString(6, client.getMail());
 			
 			//System.out.println(stmt);
@@ -85,7 +87,7 @@ public class ClientDAO {
 		try (Connection connection = obj_DB_Connection.get_connection();
 				PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_CLIENTS);) {
 			
-			System.out.println(stmt);
+//			System.out.println(stmt);
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
@@ -134,9 +136,27 @@ public class ClientDAO {
 			stmt.setString(1, client.getNom());
 			stmt.setString(2, client.getSexe());
 			stmt.setString(3, client.getPays());
-			stmt.setInt(4, client.getSolde());
+			stmt.setFloat(4, client.getSolde());
 			stmt.setString(5, client.getMail());
 			stmt.setString(6, client.getNumtel());
+			
+			rowUpdate = stmt.executeUpdate() > 0;
+			
+		} 
+		return rowUpdate;
+		
+	}
+	
+	
+	public boolean updateSoldeClient(String numtel, float solde) throws SQLException {
+		boolean rowUpdate;
+		DB_Connection obj_DB_Connection = new DB_Connection();
+		
+		try (Connection connection = obj_DB_Connection.get_connection();
+				PreparedStatement stmt = connection.prepareStatement(UPDATE_SOLDE_CLIENT_SQL);) {
+			
+			stmt.setFloat(1, solde);
+			stmt.setString(2, numtel);
 			
 			rowUpdate = stmt.executeUpdate() > 0;
 			
@@ -157,7 +177,8 @@ public class ClientDAO {
 			String likeKeyword = "%" + searchKeyword + "%";
 			stmt.setString(1, likeKeyword); //pour numtel
 			stmt.setString(2, likeKeyword); //pour nom
-			stmt.setString(3, likeKeyword); //pour pays
+			stmt.setString(3, likeKeyword);
+			stmt.setString(4, likeKeyword);//pour pays
 			
 			System.out.println("Executing SQL statement: " + stmt); // Vérification de la requête SQL
 			
@@ -168,7 +189,7 @@ public class ClientDAO {
 		            String nom = rs.getString("nom");
 		            String sexe = rs.getString("sexe");
 		            String pays = rs.getString("pays");
-		            int solde = rs.getInt("solde");
+		            float solde = rs.getFloat("solde");
 		            String mail = rs.getString("mail");
 		            
 		            // Créer un objet Client avec les données récupérées

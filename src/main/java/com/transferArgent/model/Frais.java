@@ -3,9 +3,9 @@ package com.transferArgent.model;
 public class Frais {
 	
 	private String idfrais;
-	private int montant1;
-	private int montant2;
-	private int frais;
+	private float montant1;
+	private float montant2;
+	private float frais;
 	
 	
 	public Frais() {
@@ -13,7 +13,7 @@ public class Frais {
 	}
 
 
-	public Frais(String idfrais, int montant1, int montant2, int frais) {
+	public Frais(String idfrais, float montant1, float montant2, float frais) {
 		super();
 		this.idfrais = idfrais;
 		this.montant1 = montant1;
@@ -32,17 +32,17 @@ public class Frais {
 	}
 
 
-	public int getMontant1() {
+	public float getMontant1() {
 		return montant1;
 	}
 
 
-	public void setMontant1(int montant1) {
+	public void setMontant1(float montant1) {
 		this.montant1 = montant1;
 	}
 
 
-	public int getMontant2() {
+	public float getMontant2() {
 		return montant2;
 	}
 
@@ -52,12 +52,12 @@ public class Frais {
 	}
 
 
-	public int getFrais() {
+	public float getFrais() {
 		return frais;
 	}
 
 
-	public void setFrais(int frais) {
+	public void setFrais( float frais) {
 		this.frais = frais;
 	}
 	

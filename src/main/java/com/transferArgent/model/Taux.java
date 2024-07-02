@@ -3,11 +3,11 @@ package com.transferArgent.model;
 public class Taux {
 
 	private String idtaux;
-	private int montant1;
-	private int montant2;
+	private float montant1;
+	private float montant2;
 	
 	
-	public Taux(String idtaux, int montant1, int montant2) {
+	public Taux(String idtaux, float montant1, float montant2) {
 		super();
 		this.idtaux = idtaux;
 		this.montant1 = montant1;
@@ -30,22 +30,22 @@ public class Taux {
 	}
 
 
-	public int getMontant1() {
+	public float getMontant1() {
 		return montant1;
 	}
 
 
-	public void setMontant1(int montant1) {
+	public void setMontant1(float montant1) {
 		this.montant1 = montant1;
 	}
 
 
-	public int getMontant2() {
+	public float getMontant2() {
 		return montant2;
 	}
 
 
-	public void setMontant2(int montant2) {
+	public void setMontant2(float montant2) {
 		this.montant2 = montant2;
 	}
 	

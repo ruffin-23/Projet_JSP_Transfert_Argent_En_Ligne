@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Détails du Client</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
     <style>
         
         body {
@@ -17,7 +17,7 @@
 </head>
 <body>
 	
-	<jsp:include page="index.jsp" />
+	<jsp:include page="../../index.jsp" />
 	<br>
 
     <div class="container">
@@ -41,7 +41,9 @@
                 </div>
                 <a href="edit?numtel=${client.numtel}" class="btn btn-primary">Modifier</a>
                 <a href="delete?numtel=${client.numtel}" class="btn btn-danger">Supprimer</a>
-                <a href="<%= request.getContextPath() %>/liste" class="btn btn-secondary">Retour à la liste des clients</a>
+                
+                <a href="<%= request.getContextPath() %>/envoye/newE?numtel=${client.numtel}" class="btn btn-success">Envoyer un argent</a>
+
             </div>
         </div>
     </div>
