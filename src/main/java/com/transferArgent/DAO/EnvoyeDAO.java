@@ -20,6 +20,7 @@ public class EnvoyeDAO {
 //	private static final String SELECT_ALL_NUM_TEL = "SELECT DISTINCT numtel FROM client";
 	private static final String SELECT_FOR_PDF = "SELECT date, numRecepteur, montant, raison FROM envoyer WHERE numEnvoyeur = ?";
 	private static final String SEARCH_ENVOYE_SQL = "Select * from envoyer where date LIKE ? ";
+
 	
 	public EnvoyeDAO () {
 		

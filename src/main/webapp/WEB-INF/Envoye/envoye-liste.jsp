@@ -40,6 +40,9 @@
                 <div class="col-3 ms-auto">
                     <input class="form-control" type="date" id="search" placeholder="Search"/>
                 </div>
+                <div class="col-3 ">
+				    <p>Somme des frais d'envoye : <%= request.getAttribute("sommefrais") %></p>
+				</div>
                 <br>
                 <table class="table table-bordered">
                     <thead>

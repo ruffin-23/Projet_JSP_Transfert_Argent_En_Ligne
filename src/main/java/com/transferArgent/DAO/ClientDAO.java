@@ -20,6 +20,7 @@ public class ClientDAO {
 	private static final String UPDATE_CLIENT_SQL = "UPDATE client SET nom=?, sexe=?, pays=?, solde=?, mail=? WHERE numtel = ?";
 	private static final String SEARCH_CLIENT_SQL = "Select * from client where numtel LIKE ? OR nom LIKE ? OR sexe LIKE ? OR pays LIKE ?";
 	private static final String UPDATE_SOLDE_CLIENT_SQL = "UPDATE client SET solde=? WHERE numtel = ?";
+	private static final String SELECT_MAIL = "SELECT mail FROM targent.client where numtel = ?";
 	
 	public ClientDAO () {
 		
@@ -77,6 +78,30 @@ public class ClientDAO {
 		
 		return client;
 	}
+	
+
+
+    public Client selectMail(String numtel) {
+        Client client = null;
+        DB_Connection obj_DB_Connection = new DB_Connection();
+        
+        try (Connection connection = obj_DB_Connection.get_connection();
+             PreparedStatement stmt = connection.prepareStatement(SELECT_MAIL)) {
+            stmt.setString(1, numtel);
+            // System.out.println("Executing SQL statement: " + stmt);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String mail = rs.getString("mail");
+                    client = new Client(numtel, mail);
+                }
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        
+        return client;
+    }
 	
 	
 	public List<Client> selectAllClients() {

@@ -9,13 +9,13 @@
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.css">
 	
-	<script>
+	<!--  <script>
         function calculateMontant2() {
             var montant1 = document.getElementById("montant1").value;
             var montant2 = montant1 * 4800;
-            document.getElementById("montant2").value = montant2.toFixed(0); // Pour arrondir à 2 décimales si nécessaire
+            document.getElementById("montant2").value = montant2.toFixed(2); // Pour arrondir à 2 décimales si nécessaire
         }
-    </script>
+    </script>-->
 	
 </head>
 <body>
@@ -74,7 +74,7 @@
 						value="<c:out value='${taux.montant2}' />" 
 						class="form-control"
 						name="montant2"
-						readonly
+						
 					/>
 				</fieldset>
 				<br>

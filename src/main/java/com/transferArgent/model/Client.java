@@ -30,6 +30,13 @@ public class Client {
 		this.mail = mail;
 	}
 
+	
+	public Client(String numtel,  String mail) {
+		super();
+		this.numtel = numtel;
+		this.mail = mail;
+	}
+	
 
 	public Client(String numtel) {
         this.numtel = numtel;

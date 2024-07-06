@@ -78,6 +78,9 @@ public class ClientServlet extends HttpServlet {
 
     private void listeClients(HttpServletRequest req, HttpServletResponse res)
             throws SQLException, IOException, ServletException {
+    	
+    	
+    	
         List<Client> listeClients = clientDAO.selectAllClients();
         req.setAttribute("listeClients", listeClients);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/client/client-liste.jsp");
@@ -105,8 +108,28 @@ public class ClientServlet extends HttpServlet {
         String nom = request.getParameter("nom");
         String sexe = request.getParameter("sexe");
         String pays = request.getParameter("pays");
-        int solde = Integer.parseInt(request.getParameter("solde"));
+        float solde = Float.parseFloat(request.getParameter("solde"));
         String mail = request.getParameter("mail");
+        float soldeFinal = 0.0f; // Initialise soldeFinal pour éviter les erreurs de non-initialisation
+
+        /*switch (pays) {
+            case "Madagascar":
+                soldeFinal = solde / 4800;
+                break;
+            case "France":
+                soldeFinal = solde; 
+                break;
+            case "Allemagne":
+                soldeFinal = (float) (solde / 1.08);
+                break;
+            default:
+                soldeFinal = solde; // Par défaut, aucune modification au solde initial
+                break;
+        }*/
+
+        // Utilisation de soldeFinal selon les besoins
+        //System.out.println("Solde final après traitement selon le pays : " + soldeFinal);
+        
         Client newClient = new Client(numtel, nom, sexe, pays, solde, mail);
         clientDAO.insertClient(newClient);
         response.sendRedirect("list");
@@ -120,7 +143,24 @@ public class ClientServlet extends HttpServlet {
         String pays = request.getParameter("pays");
         float solde = Float.parseFloat(request.getParameter("solde"));
         String mail = request.getParameter("mail");
-        Client updatedClient = new Client(numtel, nom, sexe, pays, solde, mail);
+        float soldeFinal = 0.0f;
+        
+        switch (pays) {
+        case "Madagascar":
+            soldeFinal = solde / 4800;
+            break;
+        case "France":
+            soldeFinal = solde; 
+            break;
+        case "Allemagne":
+            soldeFinal = (float) (solde / 1.08);
+            break;
+        default:
+            soldeFinal = solde; // Par défaut, aucune modification au solde initial
+            break;
+    }
+        
+        Client updatedClient = new Client(numtel, nom, sexe, pays, soldeFinal, mail);
         clientDAO.updateClient(updatedClient);
         response.sendRedirect("list");
     }

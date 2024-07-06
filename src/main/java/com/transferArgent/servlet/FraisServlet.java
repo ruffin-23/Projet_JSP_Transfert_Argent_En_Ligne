@@ -12,16 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.transferArgent.DAO.FraisDAO;
+import com.transferArgent.DAO.TauxDAO;
 import com.transferArgent.model.Frais;
+import com.transferArgent.model.Taux;
 
 @WebServlet("/frais/*")
 public class FraisServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private FraisDAO fraisDAO;
+    private TauxDAO tauxDAO;
 
     public void init() {
         fraisDAO = new FraisDAO();
+        tauxDAO = new TauxDAO();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -37,11 +41,9 @@ public class FraisServlet extends HttpServlet {
             request.getRequestDispatcher(path).forward(request, response);
             return;
         } else {
-
             String action = request.getPathInfo();
 
             try {
-
                 switch (action) {
                     case "/newF":
                         showNewForm(request, response);
@@ -78,7 +80,9 @@ public class FraisServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
+        List<Taux> listIdTaux = tauxDAO.selectAllTaux();
+        req.setAttribute("listIdTaux", listIdTaux);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/Frais/frais-form.jsp");
         dispatcher.forward(req, res);
     }
@@ -90,36 +94,39 @@ public class FraisServlet extends HttpServlet {
         float montant2 = Float.parseFloat(request.getParameter("montant2"));
         float frais = Float.parseFloat(request.getParameter("frais"));
 
-        Frais newFrais = new Frais(idfrais, montant1, montant2, frais);
+        Frais newFrais = new Frais(0, idfrais, montant1, montant2, frais); // id = 0 pour nouvel enregistrement
         fraisDAO.insertFrais(newFrais);
         response.sendRedirect("listF");
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String idfrais = req.getParameter("idfrais");
-        Frais existingFrais = fraisDAO.selectFrais(idfrais);
-        req.setAttribute("frais", existingFrais);
+            throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Frais existingFrais = fraisDAO.selectFrais(id);
+        req.setAttribute("frais", existingFrais); // Transfert de l'objet Frais à la vue
+        List<Taux> listIdTaux = tauxDAO.selectAllTaux();
+        req.setAttribute("listIdTaux", listIdTaux); // Assurez-vous que listIdTaux est disponible dans la vue
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/Frais/frais-form.jsp");
         dispatcher.forward(req, res);
     }
 
     private void updateFrais(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
         String idfrais = request.getParameter("idfrais");
         float montant1 = Float.parseFloat(request.getParameter("montant1"));
         float montant2 = Float.parseFloat(request.getParameter("montant2"));
         float frais = Float.parseFloat(request.getParameter("frais"));
 
-        Frais updatedFrais = new Frais(idfrais, montant1, montant2, frais);
+        Frais updatedFrais = new Frais(id, idfrais, montant1, montant2, frais);
         fraisDAO.updateFrais(updatedFrais);
         response.sendRedirect("listF");
     }
 
     private void deleteFrais(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        String idfrais = request.getParameter("idfrais");
-        fraisDAO.deleteFrais(idfrais);
+        int id = Integer.parseInt(request.getParameter("id"));
+        fraisDAO.deleteFrais(id);
         response.sendRedirect("listF");
     }
 
@@ -133,8 +140,8 @@ public class FraisServlet extends HttpServlet {
 
     private void showFraisById(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        String idfrais = request.getParameter("idfrais");
-        Frais existingFrais = fraisDAO.selectFrais(idfrais);
+        int id = Integer.parseInt(request.getParameter("id"));
+        Frais existingFrais = fraisDAO.selectFrais(id);
 
         if (existingFrais == null) {
             response.sendRedirect(request.getContextPath() + "/WEB-INF/Frais/frais-not-found.jsp");

@@ -68,7 +68,26 @@
                                 <td><c:out value="${client.nom}" /></td>
                                 <td><c:out value="${client.sexe}" /></td>
                                 <td><c:out value="${client.pays}" /></td>
-                                <td><c:out value="${client.solde}" /> Euro</td>
+                                <td>
+                                	
+                                	<c:choose>
+					                <c:when test="${client.pays == 'Madagascar'}">
+					                	<c:out value="${client.solde * 4800}" />
+					                    Ariary
+					                </c:when>
+					                <c:when test="${client.pays == 'France'}">
+					                	<c:out value="${client.solde}" />
+					                    Euro
+					                </c:when>
+					                <c:when test="${client.pays == 'Allemagne'}">
+					                	<c:out value="${client.solde * 1.08} " />
+					                    $
+					                </c:when>
+					                <c:otherwise>
+					                    <!-- Handle other countries here if needed -->
+					                </c:otherwise>
+					            </c:choose>
+                                 </td>
                                 <td><c:out value="${client.mail}" /></td>
                                 <td>
                                 
@@ -93,6 +112,6 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>	
 </body>
 </html>
